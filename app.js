@@ -88,7 +88,7 @@ function drawChart(r) {
   if (!r) {
     s += `<text class="empty" x="${m.l + iw / 2}" y="${m.t + ih / 2 - 30}" text-anchor="middle">The first live run will be plotted here.</text></svg>`;
     $("chart").innerHTML = s;
-    $("chart-sub").textContent = "Each week, real complaints are scored and checked against their labels. Points on the dashed line mean the model's stated certainty matches reality.";
+    $("chart-sub").textContent = "Each month, real complaints are scored and checked against their labels. Points on the dashed line mean the model's stated certainty matches reality.";
     return;
   }
 

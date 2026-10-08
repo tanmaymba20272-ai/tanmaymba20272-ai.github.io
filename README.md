@@ -4,7 +4,7 @@ Portfolio site for Tanmay Mohanta, Applied AI & AI Platform PM. It is a static s
 
 ## How it evolves
 
-- **Live evidence:** the chart and figures read `results/public.json` from the [conductos](https://github.com/tanmaymba20272-ai/conductos) repo, which a weekly GitHub Action updates.
+- **Live evidence:** the chart and figures read `results/public.json` from the [conductos](https://github.com/tanmaymba20272-ai/conductos) repo, which a monthly GitHub Action updates.
 - **Changelog:** add an entry to `data/changelog.json` for each release.
 - **Links:** set `notion_url` and `linkedin_url` in `data/site.json`.
 
