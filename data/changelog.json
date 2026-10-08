@@ -1,0 +1,14 @@
+[
+  {
+    "date": "2026-10-09",
+    "title": "ConductOS walking skeleton",
+    "body": "Real CFPB complaints go through Jev triage, a keyword baseline, a deterministic supervisor and a calibration harness. Every case routes to human review until the harness publishes a safe threshold.",
+    "links": [{ "label": "Code", "href": "https://github.com/tanmaymba20272-ai/conductos" }]
+  },
+  {
+    "date": "2026-10-09",
+    "title": "Product strategy, PRDs and red-team review",
+    "body": "Strategy canvas, opportunity solution tree, four PRDs, autonomy and guardrail policy, metrics spec, outcome roadmap and a red-team review of the plan's riskiest assumptions.",
+    "links": []
+  }
+]

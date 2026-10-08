@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tanmay Mohanta, Applied AI Product Manager</title>
+<meta name="description" content="Tanmay Mohanta, Applied AI and AI Platform PM. ConductOS: governed autonomous operations for financial services, with live calibration evidence.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top">
+  <a class="who" href="#">Tanmay Mohanta</a>
+  <nav aria-label="Sections">
+    <a href="#evidence">Evidence</a>
+    <a href="#build">How it's built</a>
+    <a href="#docs">Product docs</a>
+    <a href="#log">Changelog</a>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="hero">
+    <div class="hero-text">
+      <p class="role">Applied AI &amp; AI Platform Product Manager</p>
+      <h1>I build AI operations that know when to hand a case to a person.</h1>
+      <p class="lede">ConductOS is my working product for bank operations. A fast decision model reads every customer complaint. LLM agents take the hard cases. People review whatever the evidence says the AI can't yet handle alone.</p>
+      <p class="hero-links">
+        <a class="btn" href="https://github.com/tanmaymba20272-ai/conductos">Read the code</a>
+        <a class="btn ghost" href="#docs">Read the product docs</a>
+      </p>
+    </div>
+
+    <figure class="chart-panel" aria-labelledby="chart-title">
+      <figcaption>
+        <h2 id="chart-title">Is the model right as often as it claims?</h2>
+        <p class="chart-sub" id="chart-sub">Loading the latest harness run…</p>
+      </figcaption>
+      <div class="legend" id="legend" hidden>
+        <span><i class="sw raw"></i>Jev, as returned</span>
+        <span><i class="sw cal"></i>After our recalibration</span>
+        <span><i class="sw ideal"></i>Perfectly honest</span>
+      </div>
+      <div class="chart" id="chart"></div>
+      <div class="tip" id="tip" role="status" hidden></div>
+      <button class="link-btn" id="table-toggle" type="button" aria-expanded="false" hidden>Show as table</button>
+      <div id="table-wrap" hidden></div>
+    </figure>
+  </section>
+
+  <section id="evidence" class="band">
+    <div class="wrap">
+      <h2>Latest evaluation</h2>
+      <p class="intro">Each week a GitHub Action pulls fresh complaints from the US consumer finance regulator (CFPB), runs them through the pipeline and publishes these numbers. Nothing on this page is typed by hand.</p>
+      <dl class="figures" id="figures">
+        <div><dt>Status</dt><dd>Waiting for the first published run</dd></div>
+      </dl>
+      <p class="caveat" id="caveat"></p>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <h2>The bet</h2>
+    <div class="two">
+      <div>
+        <h3>System One: Jev</h3>
+        <p>Makes typed decisions on every complaint in well under a second: which product it's about, how severe it is, whether the customer may be vulnerable, whether the text is trying to manipulate an AI. It returns probabilities, not prose, so software can act on them.</p>
+      </div>
+      <div>
+        <h3>System Two: LLM agents</h3>
+        <p>Investigate, compare with similar past cases and draft replies. They only see the cases System One escalates, and their drafts are checked before a person sees them.</p>
+      </div>
+    </div>
+    <p class="note">The vendor's confidence score shows how concentrated its probabilities are. It is not a promise of accuracy. So ConductOS measures accuracy against real labels, recalibrates, and lets an agent act alone only when the lower bound of a 95% confidence interval clears the target.</p>
+  </section>
+
+  <section class="wrap">
+    <h2>How autonomy is earned</h2>
+    <ol class="ladder">
+      <li class="l0"><b>Suggest.</b> The agent proposes; a person decides every case.</li>
+      <li class="l1"><b>Act with approval.</b> The agent prepares the action; it runs after a person approves.</li>
+      <li class="l2"><b>Act and notify.</b> Reversible actions run, then a person is told and can undo.</li>
+      <li class="l3"><b>Autonomous.</b> Runs within limits; people audit samples and metrics.</li>
+    </ol>
+    <p>Each action type climbs separately, with evidence and sign-off from the compliance lead. It drops automatically when reviewers start overriding it or calibration drifts. Sending a substantive reply to a customer is capped at "act with approval". Filing a regulatory report never runs without a person.</p>
+  </section>
+
+  <section id="build" class="band">
+    <div class="wrap">
+      <h2>How it's built</h2>
+      <p class="intro">One product, three platform pillars, each a folder in one repository.</p>
+      <div class="pillars">
+        <article>
+          <h3>Agentic gateway</h3>
+          <p>One door for every model call: personal-data redaction, a fallback chain from Jev to keyword rules, a kill switch, and a trace of cost, latency and model version for each decision.</p>
+          <p class="proves">Shows: platform and API design, cost and latency trade-offs, vendor hedging.</p>
+          <a href="https://github.com/tanmaymba20272-ai/conductos/tree/main/conductos/gateway">Gateway code</a>
+        </article>
+        <article>
+          <h3>Operations pod</h3>
+          <p>Specialised agents that pass typed contracts, never free text. A state machine blocks illegal steps in code. A supervisor applies the autonomy policy without asking any model what to do.</p>
+          <p class="proves">Shows: agent orchestration, state machines, human-in-the-loop design.</p>
+          <a href="https://github.com/tanmaymba20272-ai/conductos/tree/main/conductos/ops_pod">Pod code</a>
+        </article>
+        <article>
+          <h3>Evaluation harness</h3>
+          <p>Reliability diagrams, calibration error, out-of-fold recalibration and thresholds chosen on confidence bounds, benchmarked against a keyword baseline the AI has to beat.</p>
+          <p class="proves">Shows: statistical rigour with non-deterministic AI, release gating.</p>
+          <a href="https://github.com/tanmaymba20272-ai/conductos/tree/main/conductos/eval_harness">Harness code</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="docs" class="wrap">
+    <h2>Product documentation</h2>
+    <p class="intro" id="docs-intro">The thinking behind the code, written the way I'd write it at work.</p>
+    <ul class="docs">
+      <li><b>Strategy.</b> Product strategy canvas, personas and jobs to be done, opportunity solution tree with experiments.</li>
+      <li><b>Requirements.</b> PRDs for the complaints module, gateway, operations pod and evaluation harness.</li>
+      <li><b>Governance.</b> Autonomy and guardrail policy, risk register, model validation plan, red-team review of my own plan.</li>
+      <li><b>Design.</b> Human review experience spec and a decision log of architecture trade-offs.</li>
+      <li><b>Delivery.</b> Metrics framework with alert thresholds and an outcome-based roadmap.</li>
+    </ul>
+    <p id="notion-link"></p>
+  </section>
+
+  <section class="wrap">
+    <h2>Roadmap</h2>
+    <ol class="roadmap">
+      <li><b>Prove the decision layer.</b> Calibration on live complaints against a keyword baseline. <span class="state now">In progress</span></li>
+      <li><b>Governed autonomy.</b> Review queue, automatic promotion and demotion, tracing and quotas.</li>
+      <li><b>Hard cases.</b> LLM investigation and drafting with verifiers; emerging-issue alerts for compliance.</li>
+      <li><b>Platform reuse.</b> Anti-money-laundering alert investigation on the same three pillars.</li>
+    </ol>
+  </section>
+
+  <section id="log" class="band">
+    <div class="wrap">
+      <h2>Changelog</h2>
+      <ol class="log" id="log-list"></ol>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  <p>Tanmay Mohanta, Applied AI and AI Platform Product Manager.</p>
+  <p><a href="https://github.com/tanmaymba20272-ai">GitHub</a><span id="linkedin"></span></p>
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>
