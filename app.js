@@ -88,7 +88,7 @@ function drawChart(r) {
   if (!r) {
     s += `<text class="empty" x="${m.l + iw / 2}" y="${m.t + ih / 2 - 30}" text-anchor="middle">The first live run will be plotted here.</text></svg>`;
     $("chart").innerHTML = s;
-    $("chart-sub").textContent = "Each month, real complaints are scored and checked against their labels. Points on the dashed line mean the model's stated certainty matches reality.";
+    $("chart-sub").textContent = "Each month, a fixed sample of real complaints is scored and checked against its labels. Points on the dashed line mean the model's stated certainty matches reality.";
     return;
   }
 
@@ -111,7 +111,7 @@ function drawChart(r) {
   s += "</svg>";
   $("chart").innerHTML = s;
   $("legend").hidden = false;
-  $("chart-sub").textContent = `${r.n.toLocaleString()} recent CFPB complaints, grouped by the model's stated certainty. Points on the dashed line are perfectly honest; points below it are overconfident.`;
+  $("chart-sub").textContent = `${r.n.toLocaleString()} real CFPB complaints, grouped by the model's stated certainty. Points on the dashed line are perfectly honest; points below it are overconfident.`;
 
   const tip = $("tip");
   const panel = document.querySelector(".chart-panel");
