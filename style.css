@@ -150,10 +150,15 @@ th:first-child, td:first-child { text-align: left; }
 .roadmap li::marker { font-family: var(--serif); font-size: 1.15rem; }
 .state { font-size: .8rem; padding: 2px 8px; border-radius: 99px; margin-left: 6px; white-space: nowrap; }
 .state.now { background: color-mix(in srgb, var(--review) 18%, transparent); color: var(--ink); }
-.log { list-style: none; padding: 0; margin: 24px 0 0; }
-.log li { display: grid; grid-template-columns: 130px 1fr; gap: 24px; padding: 18px 0; border-top: 1px solid var(--rule); }
-.log time { color: var(--ink-2); font-size: .95rem; }
-.log h3 { font-size: 1.15rem; margin-bottom: .3em; }
+.changelog { padding-top: 0; padding-bottom: 8px; }
+.changelog details { border-top: 1px solid var(--rule); padding-top: 16px; color: var(--ink-2); font-size: .95rem; }
+.changelog summary { cursor: pointer; width: fit-content; }
+.changelog summary:hover { color: var(--ink); }
+.log { list-style: none; padding: 0; margin: 12px 0 0; }
+.log li { display: grid; grid-template-columns: 110px 1fr; gap: 16px; padding: 10px 0; }
+.log time { font-size: .9rem; }
+.log h3 { font-family: var(--sans); font-size: .95rem; font-weight: 600; margin: 0 0 .2em; color: var(--ink); }
+.log p { margin: 0 0 .3em; }
 
 .foot { padding-top: 32px; padding-bottom: 48px; color: var(--ink-2); font-size: .95rem; }
 
