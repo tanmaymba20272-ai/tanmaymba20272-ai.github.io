@@ -65,8 +65,9 @@ function figures(r) {
     ["Right team", pct(side.accuracy.value), `One of 15 sub-teams. 95% interval ${pct(side.accuracy.ci95[0])} to ${pct(side.accuracy.ci95[1])}`],
     ["Right business line", pct(line.accuracy.value), `One of 4 lines. 95% interval ${pct(line.accuracy.ci95[0])} to ${pct(line.accuracy.ci95[1])}`],
     ["Calibration error", `${cal.raw.ece.toFixed(3)} to ${cal.recalibrated.ece.toFixed(3)}`, "As returned, then after recalibration. Lower is more honest."],
-    ["Safe to automate", at ? pct(at.coverage) : "None yet",
-      at ? `of complaints routed without a person at confidence ≥ ${at.threshold.toFixed(3)}: ${pct(at.precision)} right, lower bound ${pct(at.precision_lower)}. ${at.passes ? "Meets" : "Misses"} the ${pct(r.sub_team.target_precision_lower_bound, 0)} bar set in advance`
+    ["Safe to automate", at?.passes ? pct(at.coverage) : "None yet",
+      at?.passes ? `of complaints routed without a person at confidence ≥ ${at.threshold.toFixed(3)}: ${pct(at.precision)} right, lower bound ${pct(at.precision_lower)}, meeting the ${pct(r.sub_team.target_precision_lower_bound, 0)} bar set in advance`
+      : at ? `The most confident ${pct(at.coverage, 0)} were ${pct(at.precision)} right, but the lower bound of ${pct(at.precision_lower)} misses the ${pct(r.sub_team.target_precision_lower_bound, 0)} bar set in advance, so every case goes to a person`
          : `No threshold reached ${pct(r.sub_team.target_precision_lower_bound, 0)} at the lower bound, so every case goes to a person`],
   ];
   if (r.baseline_rules) rows.push(["Keyword-rule baseline", pct(r.baseline_rules.accuracy_all), "Right-team accuracy of the rules the AI has to beat"]);
