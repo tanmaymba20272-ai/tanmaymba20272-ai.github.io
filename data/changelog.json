@@ -1,9 +1,25 @@
 [
   {
     "date": "2026-10-09",
+    "title": "Held-out test: autonomy bar not met",
+    "body": "Jev now routes each complaint to one of 15 bank sub-teams. On 500 held-out complaints it chose the right sub-team 76.2% of the time (keyword rules: 43%) and the right business line 82.6%. The auto-routing threshold chosen on the tune half covered 56% of test complaints at 90.1% precision, but the lower bound was 86.0%, short of the 95% bar set in advance. So every complaint still goes to a person, and the gap between tune and test results is the next thing to investigate.",
+    "links": [
+      {
+        "label": "Results",
+        "href": "https://github.com/tanmaymba20272-ai/conductos/blob/main/results/latest.md"
+      }
+    ]
+  },
+  {
+    "date": "2026-10-09",
     "title": "First real evaluation: autonomy correctly withheld",
     "body": "On 500 archived CFPB complaints, Jev reached 74.8% product accuracy against 55% for keyword rules, at about 5 cents per 1,000 complaints. It was overconfident, though: cases stated as 99% certain were right 83% of the time. Recalibration halved the calibration error, but no threshold reached 95% precision at the lower bound, so every case still goes to a person. Next: route on operational groups and narrow the regulatory-risk question.",
-    "links": [{ "label": "Results", "href": "https://github.com/tanmaymba20272-ai/conductos/blob/main/results/latest.md" }]
+    "links": [
+      {
+        "label": "Results",
+        "href": "https://github.com/tanmaymba20272-ai/conductos/blob/main/results/latest.md"
+      }
+    ]
   },
   {
     "date": "2026-10-09",
@@ -15,7 +31,12 @@
     "date": "2026-10-09",
     "title": "ConductOS walking skeleton",
     "body": "Real CFPB complaints go through Jev triage, a keyword baseline, a deterministic supervisor and a calibration harness. Every case routes to human review until the harness publishes a safe threshold.",
-    "links": [{ "label": "Code", "href": "https://github.com/tanmaymba20272-ai/conductos" }]
+    "links": [
+      {
+        "label": "Code",
+        "href": "https://github.com/tanmaymba20272-ai/conductos"
+      }
+    ]
   },
   {
     "date": "2026-10-09",
