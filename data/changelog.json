@@ -1,6 +1,12 @@
 [
   {
     "date": "2026-10-09",
+    "title": "Routing ships in assist mode",
+    "body": "Because the held-out test missed the 95% bar, team routing ships in assist mode: Jev suggests one of 15 sub-teams for every complaint and a person confirms or corrects it. Nothing is routed automatically. The bar stays at 95%, and autonomy will be reconsidered only after a fresh, sealed test set passes it.",
+    "links": []
+  },
+  {
+    "date": "2026-10-09",
     "title": "Held-out test: autonomy bar not met",
     "body": "Jev now routes each complaint to one of 15 bank sub-teams. On 500 held-out complaints it chose the right sub-team 76.2% of the time (keyword rules: 43%) and the right business line 82.6%. The auto-routing threshold chosen on the tune half covered 56% of test complaints at 90.1% precision, but the lower bound was 86.0%, short of the 95% bar set in advance. So every complaint still goes to a person, and the gap between tune and test results is the next thing to investigate.",
     "links": [
