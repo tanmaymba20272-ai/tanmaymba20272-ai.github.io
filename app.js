@@ -57,16 +57,19 @@ function figures(r) {
     $("caveat").textContent = "The harness publishes here after its first run with live data.";
     return;
   }
-  const g = r.routing || r; // routing decision gates autonomy (ADR-007); older results have only product level
-  const th = g.autonomy_threshold?.recalibrated;
+  const side = r.sub_team[r.evaluated_split], line = r.business_line[r.evaluated_split];
+  const at = side.at_threshold, cal = side.calibration;
+  const when = new Date(r.generated_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
   const rows = [
-    ["Complaints evaluated", r.n.toLocaleString(), `${esc(r.model || "")}, ${new Date(r.generated_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}`],
-    ["Product accuracy", pct(r.accuracy.value), `95% interval ${pct(r.accuracy.ci95[0])} to ${pct(r.accuracy.ci95[1])}`],
-    ...(r.routing ? [["Routing accuracy", pct(g.accuracy.value), "Sending each complaint to the right team, the decision that gates autonomy"]] : []),
-    ["Calibration error", `${g.calibration.raw.ece.toFixed(3)} to ${g.calibration.recalibrated_cross_fitted.ece.toFixed(3)}`, "As returned, then after recalibration. Lower is more honest."],
-    ["Safe to automate", th ? pct(th.coverage) : "None yet", th ? `of complaints, with precision of at least ${pct(th.precision_lower)} at the lower bound` : `No threshold reaches ${pct(g.autonomy_threshold.target_precision_lower_bound, 0)} at the lower bound, so all cases go to people`],
+    ["Complaints judged", side.n.toLocaleString(), `Held-out ${r.evaluated_split} half of ${r.n_total.toLocaleString()} sampled complaints, scored by ${esc(r.model || "")} on ${when}`],
+    ["Right team", pct(side.accuracy.value), `One of 15 sub-teams. 95% interval ${pct(side.accuracy.ci95[0])} to ${pct(side.accuracy.ci95[1])}`],
+    ["Right business line", pct(line.accuracy.value), `One of 4 lines. 95% interval ${pct(line.accuracy.ci95[0])} to ${pct(line.accuracy.ci95[1])}`],
+    ["Calibration error", `${cal.raw.ece.toFixed(3)} to ${cal.recalibrated.ece.toFixed(3)}`, "As returned, then after recalibration. Lower is more honest."],
+    ["Safe to automate", at ? pct(at.coverage) : "None yet",
+      at ? `of complaints routed without a person at confidence ≥ ${at.threshold.toFixed(3)}: ${pct(at.precision)} right, lower bound ${pct(at.precision_lower)}. ${at.passes ? "Meets" : "Misses"} the ${pct(r.sub_team.target_precision_lower_bound, 0)} bar set in advance`
+         : `No threshold reached ${pct(r.sub_team.target_precision_lower_bound, 0)} at the lower bound, so every case goes to a person`],
   ];
-  if (r.baseline_rules) rows.push(["Keyword-rule baseline", pct(r.baseline_rules.accuracy_all), "Accuracy of the rules the AI has to beat"]);
+  if (r.baseline_rules) rows.push(["Keyword-rule baseline", pct(r.baseline_rules.accuracy_all), "Right-team accuracy of the rules the AI has to beat"]);
   if (r.ops?.latency_ms_p50 != null) rows.push(["Speed and cost", `${Math.round(r.ops.latency_ms_p50)} ms`, `Median per complaint (95th percentile ${Math.round(r.ops.latency_ms_p95)} ms), about $${(r.ops.cost_usd_per_case * 1000).toFixed(3)} per 1,000 complaints`]);
   $("figures").innerHTML = rows.map(([t, v, s]) => `<div><dt>${t}</dt><dd>${v}<small>${s}</small></dd></div>`).join("");
   $("caveat").textContent = r.label_caveat + " " + (r.signals?.note || "");
@@ -94,10 +97,10 @@ function drawChart(r) {
     return;
   }
 
-  const g = r.routing || r;
+  const g = r.sub_team[r.evaluated_split];
   const series = [
     { key: "raw", name: "Jev, as returned", color: "var(--series-raw)", bins: g.calibration.raw.bins },
-    { key: "cal", name: "After our recalibration", color: "var(--series-cal)", bins: g.calibration.recalibrated_cross_fitted.bins },
+    { key: "cal", name: "After our recalibration", color: "var(--series-cal)", bins: g.calibration.recalibrated.bins },
   ];
   const points = [];
   for (const se of series) {
@@ -114,7 +117,7 @@ function drawChart(r) {
   s += "</svg>";
   $("chart").innerHTML = s;
   $("legend").hidden = false;
-  $("chart-sub").textContent = `${r.n.toLocaleString()} real CFPB complaints, grouped by the model's stated certainty about ${r.routing ? "which team should handle each one" : "each complaint's product"}. Points on the dashed line are perfectly honest; points below it are overconfident.`;
+  $("chart-sub").textContent = `${g.n.toLocaleString()} held-out CFPB complaints, grouped by the model's stated certainty about which team should handle each one. Points on the dashed line are perfectly honest; points below it are overconfident.`;
 
   const tip = $("tip");
   const panel = document.querySelector(".chart-panel");
@@ -138,7 +141,7 @@ function drawChart(r) {
   tb.hidden = false;
   wrap.innerHTML = `<table><thead><tr><th>Stated certainty</th><th>Complaints</th><th>Right (as returned)</th><th>Right (recalibrated bin)</th></tr></thead><tbody>${g.calibration.raw.bins
     .filter((b) => b.n)
-    .map((b) => `<tr><td>${pct(b.lo, 0)} to ${pct(b.hi, 0)}</td><td>${b.n}</td><td>${pct(b.accuracy, 0)}</td><td>${(() => { const c = g.calibration.recalibrated_cross_fitted.bins.find((k) => k.lo === b.lo && k.n); return c ? pct(c.accuracy, 0) : "n/a"; })()}</td></tr>`)
+    .map((b) => `<tr><td>${pct(b.lo, 0)} to ${pct(b.hi, 0)}</td><td>${b.n}</td><td>${pct(b.accuracy, 0)}</td><td>${(() => { const c = g.calibration.recalibrated.bins.find((k) => k.lo === b.lo && k.n); return c ? pct(c.accuracy, 0) : "n/a"; })()}</td></tr>`)
     .join("")}</tbody></table>`;
   tb.addEventListener("click", () => {
     wrap.hidden = !wrap.hidden;
